@@ -214,6 +214,10 @@ module.config.public = {
     -- When true, images will render when a `.norg` buffer is entered
     render_on_enter = false,
 
+    -- When true, images will be resized to fit the size of the concealed text region.
+    -- Otherwise, if conceal is true, the images will overflow the rest of the text
+    bounded_geometry = true,
+
     -- Module that renders the images. This is currently the only option
     renderer = "core.integrations.image",
 

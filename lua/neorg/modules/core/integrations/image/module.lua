@@ -25,7 +25,7 @@ module.private = {
 }
 
 module.public = {
-    new_image = function(buffernr, png_path, position, window, scale, virtual_padding)
+    new_image = function(buffernr, png_path, position, window, scale, virtual_padding, bounded_geometry)
         local image = require("image").from_file(png_path, {
             window = window,
             buffer = buffernr,
@@ -34,9 +34,13 @@ module.public = {
         local geometry = {
             x = position.column_start,
             y = position.row_start + (virtual_padding and 1 or 0),
-            width = position.column_end - position.column_start,
-            height = scale,
         }
+        if bounded_geometry then
+            table.insert(geometry, {
+                width = position.column_end - position.column_start,
+                height = scale,
+            })
+        end
         image:render(geometry)
     end,
     get_images = function()
