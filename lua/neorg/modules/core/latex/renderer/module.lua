@@ -185,19 +185,21 @@ module.public = {
             end)
 
             for i, range in ipairs(module.private.ranges) do
-                vim.api.nvim_buf_set_extmark(
-                    vim.api.nvim_get_current_buf(),
-                    vim.api.nvim_create_namespace("concealer"),
-                    range[1],
-                    range[2],
-                    {
-                        id = i,
-                        end_col = range[4],
-                        conceal = "",
-                        virt_text = { { (" "):rep(images[i].rendered_geometry.width) } },
-                        virt_text_pos = "inline",
-                    }
-                )
+                if images[i].rendered_geometry.width then
+                    vim.api.nvim_buf_set_extmark(
+                        vim.api.nvim_get_current_buf(),
+                        vim.api.nvim_create_namespace("concealer"),
+                        range[1],
+                        range[2],
+                        {
+                            id = i,
+                            end_col = range[4],
+                            conceal = "",
+                            virt_text = { { (" "):rep(images[i].rendered_geometry.width) } },
+                            virt_text_pos = "inline",
+                        }
+                    )
+                end
             end
         end
     end,
